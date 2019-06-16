@@ -19,7 +19,7 @@
   * `WikipediaInput.java` : used to represent parse wikipedia content to List of questions, answers and content.
 
 #### Code coverage :
-* Above 90%, most of the code has been covered
+* Above 85%, most of the code has been covered (measured using Intellij IDEA plugin)
 
 #### Assumptions made :
 * The important assumption made is : We have already read text file using Java/IO and we have got string which contains Wikipedia paragraph, questions and answers.
