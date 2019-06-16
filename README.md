@@ -10,6 +10,7 @@
 * Run `Solution.java` file.
 
 #### Implementation details :
+* Similarity score : Similarity score has been calculated based on the intersection between two sentences by identfiying common words between sentences. Score has been calculated for (Sentence - Question) and (Sentence-Answer) and product of them.
 * **Parser package :** contains `WikipediaParser.java` which is responsible for parsing Wikipedia input to list of questions, answers and actual paragraph.
 * **matcher package :** contains `QuestionAnswerMatcher.java`, which is responsible for finding all matching answers to question and picking best potential match out of it based on similarity score.
 * **model package :**
