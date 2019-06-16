@@ -17,15 +17,22 @@ public class WikipediaInputTest {
     public void setUp() {
         List<String> questions = getQuestions();
         List<String> answers = getAnswers();
-        wikipediaInput = new WikipediaInput("Wikipedia Test Paragraph", questions, answers);
+        List<String> sentences = getSentences();
+        wikipediaInput = new WikipediaInput(sentences, questions, answers);
     }
 
     @Test
     public void shouldTestConstructorAndGetter() {
         assertNotNull(wikipediaInput);
-        assertEquals("Wikipedia Test Paragraph", wikipediaInput.getParagraphString());
+        assertEquals(getSentences(), wikipediaInput.getSentences());
         assertEquals(2, wikipediaInput.getQuestions().size());
         assertEquals(2, wikipediaInput.getAnswers().size());
+    }
+
+    private List<String> getSentences() {
+        List<String> sentences = new ArrayList<>();
+        sentences.add("Wikipedia Test Paragraph");
+        return sentences;
     }
 
     private List<String> getQuestions() {

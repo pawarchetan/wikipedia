@@ -17,24 +17,23 @@ public class WikipediaParserTest {
 
     @Before
     public void setUp() {
-        wikipediaParser = new WikipediaParser();
         wikipediaContent = TestData.wikipediaParagraph();
-
+        wikipediaParser = new WikipediaParser(wikipediaContent);
     }
 
     @Test
     public void shouldGetParagraphTextFromWikipediaContent() {
-        String expectedParagraphContent = TestData.getParagraphContent();
-        WikipediaInput wikipediaInput = wikipediaParser.parseWikipediaContent(wikipediaContent);
+        List<String> expectedSentences = TestData.getParagraphContent();
+        WikipediaInput wikipediaInput = wikipediaParser.parseWikipediaContent();
 
         assertNotNull(wikipediaInput);
-        assertEquals(expectedParagraphContent, wikipediaInput.getParagraphString());
+        assertEquals(expectedSentences, wikipediaInput.getSentences());
     }
 
     @Test
     public void shouldGetQuestionsFromWikipediaContent() {
         List<String> expectedQuestions = TestData.getTestQuestions();
-        WikipediaInput wikipediaInput = wikipediaParser.parseWikipediaContent(wikipediaContent);
+        WikipediaInput wikipediaInput = wikipediaParser.parseWikipediaContent();
 
         assertNotNull(wikipediaContent);
         assertEquals(expectedQuestions, wikipediaInput.getQuestions());
@@ -43,7 +42,7 @@ public class WikipediaParserTest {
     @Test
     public void shouldGetAnswersFromWikipediaContent() {
         List<String> expectedAnswers = TestData.getTestAnswers();
-        WikipediaInput wikipediaInput = wikipediaParser.parseWikipediaContent(wikipediaContent);
+        WikipediaInput wikipediaInput = wikipediaParser.parseWikipediaContent();
 
         assertNotNull(wikipediaContent);
         assertEquals(expectedAnswers, wikipediaInput.getAnswers());
