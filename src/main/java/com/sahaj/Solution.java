@@ -1,11 +1,14 @@
 package com.sahaj;
 
-import com.sahaj.matcher.QuestionAnswerMatcher;
-import com.sahaj.model.Answer;
-import com.sahaj.model.WikipediaInput;
-import com.sahaj.parser.WikipediaParser;
+import com.sahaj.wikipedia.Answer;
+import com.sahaj.wikipedia.Wikipedia;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Solution {
 
@@ -31,15 +34,31 @@ public class Solution {
             " that are phenotypically similar to the quagga; Grévy's zebra and the mountain zebra";
 
     public static void main(String[] args) {
-        new Solution().getMatchingAnswers();
+        List<String> inputSentences = Arrays.asList(wikipediaContent.split("\n"));
+        List<String> answers = parseAnswers(inputSentences);
+        Wikipedia wikipedia = Wikipedia.of(inputSentences, answers);
+
+        List<String> questions =  parseQuestions(inputSentences);
+
+        for(String question: questions) {
+            Optional<Answer> optionalAnswer = wikipedia.ask(question);
+            optionalAnswer.ifPresent(answer -> System.out.println(answer.getContent()));
+        }
     }
 
-    private void getMatchingAnswers() {
-        WikipediaParser wikipediaParser = new WikipediaParser(wikipediaContent);
-        WikipediaInput wikipediaInput = wikipediaParser.parseWikipediaContent();
-        QuestionAnswerMatcher answerMatcher = new QuestionAnswerMatcher();
-        List<Answer> answerList = answerMatcher.findMatchingAnswer(wikipediaInput);
-        answerList.forEach(answer -> System.out.println(answer.getAnswerString()));
+    private static List<String> parseQuestions(List<String> inputSentences) {
+        return inputSentences.stream()
+                .skip(1)
+                .limit(inputSentences.size() - 2)
+                .collect(Collectors.toList());
+    }
+
+    private static List<String> parseAnswers(List<String> inputSentences) {
+        return inputSentences.stream()
+                .filter(Objects::nonNull)
+                .skip(inputSentences.size() - 1)
+                .flatMap(Pattern.compile(";")::splitAsStream)
+                .collect(Collectors.toList());
     }
 
 }
