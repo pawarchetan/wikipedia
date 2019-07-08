@@ -9,21 +9,14 @@
 #### How to run :
 * Run `Solution.java` file.
 
-#### Implementation details :
-* **Similarity score :** Similarity score has been calculated based on the intersection between two sentences by identfiying common words. Score has been calculated for (Sentence to Question) and (Sentence to Answer) and product of them has been considered to get best potentail match.
-* **Parser package :** contains `WikipediaParser.java` which is responsible for parsing Wikipedia input to list of questions, answers and actual paragraph.
-* **matcher package :** contains `QuestionAnswerMatcher.java`, which is responsible for finding all matching answers to question and picking best potential match out of it based on similarity score.
-* **model package :**
-  * `Answer.java` : used to repesent answer which will be get printed.
-  * `Question.java` : used to process question, processing inludes finding all matching answers from given answers to a question, picking best match from all answers.
-  * `Sentence.java` : used to process a particular sentence (question, content, answer), processing includes stemming, making it singular, finding the intersection between two list to find similarity etc.
-  * `WikipediaInput.java` : used to represent parse wikipedia content to List of questions, answers and content.
-
+#### Design considerations :
+* We are assuming that when we will run actual solution on production environment, we will take input from user so that we will not have to do parsing/sequencing(as everything will be in ordered)
+* Expose only required entities from `Solution.java` considering the boundary for a entire solution. We have exposed only `Wikipedia` and `Answer` from `Solution.java`.
+* `Wikipedia` should not have a knowledge about line sequence ordering, it should be only responsible for giving answer to a question from paragraphContent and answers list. Thats why ordering/sequencing has been done before calling wikipedia.
+* **Wikipedia.ask(question) :** Whenever we get a question, we ask Wikipedia to answer this question from the content wikipedia have.
+* Private constructors has been used whenever required for immutability purpose.
+* **Similarity score :** Similarity score has been calculated based on the intersection between two sentences by identfiying common words. Score has been calculated for (Sentence to Question) and (Sentence to Answer) and product of them has been considered to get best potential match.
+* **Potential match :** Potential match has been determined by product of similarity score between question and sentence and similarity score between answer and sentence.
+Potential match (answer) = Max(score(sentence,question) * (score(sentence,answer))
 #### Code coverage :
-* Above 85%, most of the code has been covered (measured using Intellij IDEA plugin)
-
-#### Assumptions made :
-* The important assumption made is : We have already read text file using Java/IO and we have got string which contains Wikipedia paragraph, questions and answers.
-
-#### Future scope :
-* More negative test scenarios
+* Above 95%, most of the code has been covered (measured using Intellij IDEA plugin)
