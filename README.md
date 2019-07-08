@@ -17,6 +17,6 @@
 * Private constructors has been used whenever required for immutability purpose.
 * **Similarity score :** Similarity score has been calculated based on the intersection between two sentences by identfiying common words. Score has been calculated for (Sentence to Question) and (Sentence to Answer) and product of them has been considered to get best potential match.
 * **Potential match :** Potential match has been determined by product of similarity score between question and sentence and similarity score between answer and sentence.
-Potential match (answer) = Max(score(sentence,question) * (score(sentence,answer))
+`Potential match (answer) = Max(score(sentence,question) * (score(sentence,answer))`
 #### Code coverage :
 * Above 95%, most of the code has been covered (measured using Intellij IDEA plugin)
